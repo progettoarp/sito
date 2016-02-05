@@ -1,0 +1,75 @@
+#container
+{
+	margin:0 auto;
+	height:400px;
+	width:800px;
+	position:relative;
+
+
+}
+#immagine
+{
+    width: inherit;
+    height: inherit;
+}
+
+.radio-item
+{
+
+height: 100px;
+    width: 100px;
+	margin:22px 16px;
+	box-shadow:0 2px 1px grey;
+	transition-property: box-shadow;
+   	transition-duration: 0.2s;
+   	transition-timing-function: ease;
+   	background: #ECECEC;
+   	float:left;
+	-webkit-background-size: contain;
+  	-moz-background-size: contain;
+  	-o-background-size: contain;
+  	background-size: contain;
+  	background-repeat: no-repeat;
+  	background-position: center;
+}
+.radio-item:hover{
+ 	box-shadow:  0 4px 5px grey;
+}
+
+.barra{
+    height: 125px;
+    width: calc(100% - 343px);
+    position: fixed;
+    bottom: 0;
+    left: 343px;
+    background-color: #8ce196;
+    display:flex;
+}
+.page-title{
+line-height: 60px;
+    text-align: center;
+    font-size: 60px;
+
+}
+
+.radioscelta{
+   margin: 0 20px;
+    width: 100px;
+    height: 125px;
+    -webkit-background-size: contain;
+  	-moz-background-size: contain;
+  	-o-background-size: contain;
+  	background-size: contain;
+  	background-repeat: no-repeat;
+  	background-position: center;
+}
+.plpast{
+margin-top:1.4%;
+margin-left:70%;
+width:100px;
+height:100px;
+}
+.radio-container{
+height:calc(100% - 125px);
+overflow: auto;
+}

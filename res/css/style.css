@@ -1,0 +1,70 @@
+    body,html{
+		height: 100%;
+        width: 1349px;
+    	max-width: 1349px;
+	}
+
+	/* remove outer padding */
+	.main .row{
+		padding: 0px;
+		margin: 0px;
+	}
+
+	/*Remove rounded coners*/
+
+	nav.sidebar.navbar {
+		border-radius: 0px;
+	}
+
+/* Add gap to nav and right windows.*/
+	.main{
+	/*display:flex;
+		width:1006px;
+        height:100%;
+        float:right;*/
+        position: absolute;
+    display: flex;
+    width: calc(100% - 343px);
+    height: 100%;
+    float: right;
+    margin-left: 343px;
+    overflow-y:auto;
+        
+        }
+    
+	nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
+		color: #CCC;
+		background-color: transparent;
+	}
+
+	nav:hover .forAnimate{
+		opacity: 1;
+	}
+	section{
+		padding-left: 15px;
+	}
+.menu{
+	width:100%;
+}
+.menu>a{
+    font-size: 20px !important;
+    padding-left: 10% !important;
+    padding: 0 30px !important;
+    line-height: 60px !important;
+}
+.menu>a>span{
+	font-size: 25px !important;
+    line-height: 60px !important;
+}
+.lista:hover{
+	background-color:#8ce196;
+}
+#logo-container{
+	display: flex;
+    width: 100%;
+    text-align: center;
+}
+#logo-container>a{
+	margin:0 auto;
+}
+
