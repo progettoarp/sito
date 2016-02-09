@@ -99,7 +99,7 @@ glyphicon glyphicon-calendar"></i></button>
         $("#popupEventi").hide();
       	});
 		</script>
-		<script src="../res/js/clock.js"></script>
+		<script src="res/js/clock.js"></script>
 
 	</body>
 </html>

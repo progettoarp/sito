@@ -126,6 +126,6 @@
             
             </div>
 		</div>
-	<script src="../res/js/clock.js"></script>
+	<script src="res/js/clock.js"></script>
     </body>
 </html>
