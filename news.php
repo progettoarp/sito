@@ -74,7 +74,7 @@
             </div>
             <div id="forecast-container">
             <div id="clock">
-            	 <article class="clock simple" style="background:#EdEdEd url(../res/img/clock-1.svg) no-repeat center;box-shadow: 0 1px 1px #B8B8B8;background-size:100%;width: 15em;height:15em;margin:10px auto;">
+            	 <article class="clock simple" style="background:#EdEdEd url(./res/img/clock-1.svg) no-repeat center;box-shadow: 0 1px 1px #B8B8B8;background-size:100%;width: 15em;height:15em;margin:10px auto;">
                    <div class="hours-container">
                      <div class="hours"></div>
                    </div>

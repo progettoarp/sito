@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "progettoleila", "delneri!", "my_progettoleila");
+$mysqli = new mysqli("localhost", "root", "", "my_progettoleila");
 $q=mysqli_query($mysqli,"truncate table db_meteo_previsioni");
 $result= mysqli_query($mysqli,"select * from db_meteo_scelte");
 while($city=mysqli_fetch_array($result)){
