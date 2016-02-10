@@ -16,7 +16,7 @@
 		<p id="result"></p>
 		</div>
 		<script>
-			$('#cerca').keyup(function(){
+			$('#cerca').keyup(function(e){
 				$.post( "./res/php/city-autocomplete.php", { citta: $(this).val() })
 				  .done(function( data ) {
 					$('#result').html(data);
