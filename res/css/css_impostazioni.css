@@ -219,3 +219,59 @@ border-color: #5cb85c !important;
 {
 	background-color:#FFF9C2;
 }
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
+}
+
+#popup-container
+{
+	position:absolute; 
+	height:100%; 
+	width:100%; 
+	background-color:rgba(128,128,128,0.39); 
+	display:none;
+}
+
+#popup-news
+{
+	position:relative;     
+	border-radius: 5pt;
+	margin: 140 auto; 
+	height:380px; 
+	width:610px; 
+	background-color:white;
+}
+#popup-content
+{
+	display: inline-block;
+    margin-top: 20px;
+    height: 355;
+    /*background-color: red;*/
+    width: 605;
+}
+#close-popup
+{
+	z-index: 2; 
+	position:absolute; 
+	margin-left:575px; 
+	margin-top:5px; 
+	background:red;
+}
+.element-popup{
+	margin-top:6px;
+}
