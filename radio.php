@@ -22,7 +22,10 @@
 							$mysqli = new mysqli("localhost", "root", "", "my_progettoleila");
                             $result= mysqli_query($mysqli,"select * from db_radio_source ");
                             while($r=mysqli_fetch_array($result)){
+
                             echo '<div class="radio-item-container" onclick="play(\''.$r['source_icon'].'\',\''.$r['nome'].'\')"'.'><div class="radio-item" style="background-image:url('.$r['source_icon'].')"></div><p style="width: 101px;height: 30px;text-align: center; font-family: cursive;">'.$r['nome'].'</p></div>';
+
+
 							
 							}
 ?>

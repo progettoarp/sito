@@ -13,7 +13,16 @@
     height: inherit;
 }
 
+#nomeradio{
+    margin: 0 0 10px;
+    width: 750px;
+	font-size: 34px;
+    font-family: fantasy;
+    align-self: center;
+	margin-top: 40px;
+	
 
+}
 
 .barra{
     height: 125px;
@@ -22,7 +31,8 @@
     bottom: 0;
     left: 343px;
     background-color: #8ce196;
-    display:flex;
+    display:none;
+
 }
 .page-title{
 line-height: 60px;
@@ -32,9 +42,9 @@ line-height: 60px;
 }
 
 .radioscelta{
-   margin: 0 20px;
-    width: 100px;
-    height: 125px;
+    margin: 0 0px;
+    width: 125px;
+	background-color: #ECECEC;   
     -webkit-background-size: contain;
   	-moz-background-size: contain;
   	-o-background-size: contain;
@@ -44,7 +54,6 @@ line-height: 60px;
 }
 .plpast{
 margin-top:27px;
-margin-left:70%;
 width:75px;
 height:75px;
     -webkit-background-size: contain;
@@ -52,11 +61,11 @@ height:75px;
   	-o-background-size: contain;
   	background-size: contain;
   	background-repeat: no-repeat;
-  	background-position: center;
+  	background-position: center;	
 }
 
 .radio-container{
-height:calc(100% - 125px);
+height:100%;
 overflow: auto;
 
 }
@@ -88,3 +97,4 @@ float:left;
 .radio-item:hover{
  	box-shadow:  0 4px 5px grey;
 }
+
