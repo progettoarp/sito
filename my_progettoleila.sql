@@ -19,8 +19,47 @@ SET time_zone = "+00:00";
 --
 -- Database: `my_progettoleila`
 --
+--
+-- Struttura della tabella `db_eventi`
+--
+
+CREATE TABLE IF NOT EXISTS `db_eventi` (
+  `IDEvento` int(10) NOT NULL AUTO_INCREMENT,
+  `nomeEvento` varchar(30) NOT NULL,
+  `dataInizio` date NOT NULL,
+  `dataFine` date NOT NULL,
+  `oraInizio` int(11) NOT NULL,
+  `minutoInizio` int(11) NOT NULL,
+  `oraFine` int(11) NOT NULL,
+  `minutoFine` int(11) NOT NULL,
+  `Suoneria` int(11) NOT NULL,
+  PRIMARY KEY (`IDEvento`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dump dei dati per la tabella `db_eventi`
+--
+
+INSERT INTO `db_eventi` (`IDEvento`, `nomeEvento`, `dataInizio`, `dataFine`, `oraInizio`, `minutoInizio`, `oraFine`, `minutoFine`, `Suoneria`) VALUES
+(1, 'Gita a barcellona!!', '0000-00-00', '0000-00-00', 6, 0, 22, 0, 0),
+(2, 'GITA', '2016-04-03', '2016-04-06', 6, 0, 22, 0, 0);
 
 -- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_suonerie_sveglie` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `Titolo` varchar(30) NOT NULL,
+  `Path` varchar(40) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dump dei dati per la tabella `db_suonerie_sveglie`
+--
+
+INSERT INTO `db_suonerie_sveglie` (`ID`, `Titolo`, `Path`) VALUES
+(1, 'Virus - Martin Garrix', 'percorsoACaso'),
+(2, 'Sere Nere - Ferro', 'percorsoACaso'),
+(3, 'Albachiara - Vasco', 'percorsoACaso');
 
 --
 -- Struttura della tabella `db_impostazioni`
@@ -36,6 +75,26 @@ CREATE TABLE IF NOT EXISTS `db_impostazioni` (
 --
 -- Dump dei dati per la tabella `db_impostazioni`
 --
+CREATE TABLE IF NOT EXISTS `db_sveglie` (
+  `IDSveglia` int(10) NOT NULL AUTO_INCREMENT,
+  `Ora` int(10) NOT NULL,
+  `Minuti` int(10) NOT NULL,
+  `Giorno` char(7) NOT NULL,
+  `Suoneria` int(10) NOT NULL,
+  `Nome` varchar(20) NOT NULL,
+  PRIMARY KEY (`IDSveglia`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+
+--
+-- Dump dei dati per la tabella `db_sveglie`
+--
+
+INSERT INTO `db_sveglie` (`IDSveglia`, `Ora`, `Minuti`, `Giorno`, `Suoneria`, `Nome`) VALUES
+(40, 3, 3, '0010101', 0, ''),
+(42, 1, 15, '0001100', 0, 'Asta'),
+(43, 12, 5, '1111111', 2, 'Pranzo'),
+(44, 12, 5, '1111111', 2, 'Pranzo'),
+(45, 0, 0, '0000010', 0, 'jdhsafsdbjkfdsf');
 
 INSERT INTO `db_impostazioni` (`idImpo`, `str_name`, `str_value`) VALUES
 (1, 'username', 'admin'),
