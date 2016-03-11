@@ -8,16 +8,34 @@
         <link href="res/css/sveglie.css" rel="stylesheet" type="text/css">
         <link href="bootstrap-3.3.5-dist/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 		<script src="res/js/jquery-2.2.0.min.js"></script>
+		<style>
+		.ui-datepicker-prev span, .ui-datepicker-next span{
+			
+			 background-image: url(res/img/arow.png) !important;
+		}
+		</style>
         <script src="bootstrap-3.3.5-dist/js/bootstrap-datetimepicker.min.js"></script>
         <script>
         $(document).ready(function()
         {
-        	$('#h, #m').focusout(function(){
+        	$('#h,#hE,#hE2,#m,#mE,#mE2').focusout(function(){
             	if(this.value.length==1)
        				this.value='0'+this.value;
             })
          });
         </script>
+		<style>
+			#nomeEvento::-webkit-input-placeholder
+			{
+			  color:    white;
+			}
+			#nomeEvento:-moz-placeholder 
+			{
+			  color:    white;
+			}
+		</style>
+		<script src="res/js/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="res/css/calendar.css" type="text/css"/>
 	</head>
 	<body>
 		<?php			
@@ -53,22 +71,20 @@ glyphicon glyphicon-calendar"></i></button>
                     
                     <input id="h" name="ora" type="number" min="0" max="24" maxlength="2" class="sveglia-picker" value="00" style="position:relative;height:150px; width:120px; text-color:white; margin-left:170px;margin-top:25px;font-size:100px;" />
                     <input id="m" name="minuti" type="number"  min="0" max="59" maxlength="2" class="sveglia-picker" value="00" style="position:relative;height:150px; width:120px; text-color:white; margin-left:20px;margin-top:25px;font-size:100px;" />
-                    <button id="h+" onclick="incrementHour()" style="outline:none; position:absolute; margin-left:-220px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
-                  	<button id="m+" onclick="incrementMinutes()" style="outline:none; position:absolute; margin-left:-80px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
-                    <button id="h-" onclick="decreaseHour()" style="outline:none; position:absolute; margin-left:-220px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>
-                  	<button id="m-" onclick="decreaseMinutes()" style="outline:none; position:absolute; margin-left:-80px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>
+                    <button id="h+" onclick="incrementHour('h')" style="outline:none; position:absolute; margin-left:-220px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
+                  	<button id="m+" onclick="incrementMinutes('m')" style="outline:none; position:absolute; margin-left:-80px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
+                    <button id="h-" onclick="decreaseHour('h')" style="outline:none; position:absolute; margin-left:-220px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>
+                  	<button id="m-" onclick="decreaseMinutes('m')" style="outline:none; position:absolute; margin-left:-80px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>
                     </div>
 					<div style="position:relative; height:100px; width:100%; background:#8ce196;">
 						<select name="combo" style="outline:none; position:absolute; height:40px; width:180px; margin-top:30px; margin-left:360px; border-radius:15px;">
 							<?php
 							//CODICE PHP PER METTERE NELLA COMBOBOX LE SUONERIE DEL DATABASE
-								$myconn=mysql_connect('localhost','root','') or die('Errore nel connettersi al server mySQL!');
-								mysql_select_db('my_progettoleila', $myconn) or die('Errore nel connettersi al database!');
+								$myconn= new mysqli('localhost','root','','my_progettoleila') or die('Errore nel connettersi al server mySQL!');
 								$query = "SELECT Titolo FROM db_suonerie_sveglie";
-								$result = mysql_query($query, $myconn) or die('Errore nella query');
-								$numrows=mysql_num_rows($result);
+								$result = $myconn->query($query) or die('Errore nella query');
 								$i=0;
-								while($array = mysql_fetch_array($result))
+								while($array = mysqli_fetch_array($result))
 								{
 									echo '<option value='.$i.'>'.$array[0].'</option>';
 									$i++;
@@ -95,28 +111,83 @@ glyphicon glyphicon-calendar"></i></button>
         <!--PopupEventi-->
         
         	    <div id="popupEventi" style="position:absolute; height:100%; width:100%; background-color:rgba(128,128,128,0.39); display:none;">
-					<div style="position:relative; margin: 140 auto; height:400px; width:600px; background-color:white;">
-						<button id="closePopup2" type="button" class="btn btn-warning btn-circle" style="outline:none; z-index: 2; position:absolute; margin-left:560px; margin-top:5px; background:red;"><i style="margin:0 auto;" class="glyphicon glyphicon-remove" ></i></button>
-						<div style="z-index:1; position:relative; width:100%; height:300px; background:#8ce196;">
-							<input id="nomeEvento" type="text" placeholder=" &nbsp&nbsp Titolo Evento" style="position:absolute; outline:none; height:40px; width:180px; margin-top:20px; margin-left:210px; border-radius:15px;">
+					<div style="position:absolute; margin-left:97px;margin-top:50px; height:600px; width:1200px; background-color:white;">
+						<button id="closePopup2" type="button" class="btn btn-warning btn-circle" style="outline:none; z-index: 2; position:absolute; margin-left:1160px; margin-top:5px; background:red;"><i style="margin:0 auto;" class="glyphicon glyphicon-remove" ></i></button>
+						<div style="z-index:1; position:relative; width:100%; height:400px; background:white;">
+							<input id="nomeEvento" type="text" placeholder=" &nbsp&nbsp Titolo Evento" style="background: #8ce196; position:absolute; outline:none; height:40px; width:180px; margin-top:20px; margin-left:510px; border-radius:15px;">
+							<b style="position:absolute; color:#8ce196; margin-left:250px; margin-top:45px;">Inizio Evento</b>
+							<!--calendarioInizio-->
+							<div id="calendar" style="position:absolute; margin-left:120px; margin-top:80px;"></div>
+							<script>
+								$('#calendar').datepicker({
+									inline: true,
+									firstDay: 1,
+									showOtherMonths: true,
+									dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+								});
+							</script>
+							<b style="position:absolute; color:#8ce196; margin-left:844px; margin-top:45px;">Fine Evento</b>
+							<!--calendarioFINE-->
+							<div id="calendar2" style="position:absolute; margin-left:714px; margin-top:80px;"></div>
+							<script>
+								$('#calendar2').datepicker({
+									inline: true,
+									firstDay: 1,
+									showOtherMonths: true,
+									dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+								});
+							</script>
+						</div>
+						<div style="background:#8ce196; height: 200px;">
+						<div style="margin-left:0px;">
+							<input id="hE" name="ora" type="number" min="0" max="24" maxlength="2" class="sveglia-picker" value="00" style="position:relative;height:150px; width:120px; text-color:white; margin-left:170px;margin-top:25px;font-size:100px;" />
+							<input id="mE" name="minuti" type="number"  min="0" max="59" maxlength="2" class="sveglia-picker" value="00" style="position:relative;height:150px; width:120px; text-color:white; margin-left:20px;margin-top:25px;font-size:100px;" />
+							<button id="h+E" onclick="incrementHour('hE')" style="outline:none; position:absolute; margin-left:-220px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
+							<button id="m+E" onclick="incrementMinutes('mE')" style="outline:none; position:absolute; margin-left:-80px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
+							<button id="h-E" onclick="decreaseHour('hE')" style="outline:none; position:absolute; margin-left:-220px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>
+							<button id="m-E" onclick="decreaseMinutes('mE')" style="outline:none; position:absolute; margin-left:-80px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>						
+						</div>
 
+						<select name="comboE" style="outline:none; position:absolute; height:40px; width:180px; margin-top:-150px; margin-left:510px; border-radius:15px;">
+							<?php
+							//CODICE PHP PER METTERE NELLA COMBOBOX LE SUONERIE DEL DATABASE
+								$myconn= new mysqli('localhost','root','','my_progettoleila') or die('Errore nel connettersi al server mySQL!');
+								$query = "SELECT Titolo FROM db_suonerie_sveglie";
+								$result = $myconn->query($query) or die('Errore nella query');
+								$i=0;
+								while($array = mysqli_fetch_array($result))
+								{
+									echo '<option value='.$i.'>'.$array[0].'</option>';
+									$i++;
+								}
+							?>	
+						</select>						
+						<button id="okE" style="outline:none; background:#2aa238; border:#2aa238; position:absolute; margin-left:565px; margin-top:-90px; padding:0;"  class="btn btn-info btn-circle btn-xl"><i class="glyphicon glyphicon-ok" style="line-height:70px;"></i></button>
+						<div style="margin-left:590px; margin-top:-175px;">
+							<input id="hE2" name="ora" type="number" min="0" max="24" maxlength="2" class="sveglia-picker" value="00" style="position:relative;height:150px; width:120px; text-color:white; margin-left:170px;margin-top:25px;font-size:100px;" />
+							<input id="mE2" name="minuti" type="number"  min="0" max="59" maxlength="2" class="sveglia-picker" value="00" style="position:relative;height:150px; width:120px; text-color:white; margin-left:20px;margin-top:25px;font-size:100px;" />
+							<button id="h+E2" onclick="incrementHour('hE2')" style="outline:none; position:absolute; margin-left:-220px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
+							<button id="m+E2" onclick="incrementMinutes('mE2')" style="outline:none; position:absolute; margin-left:-80px; margin-top:5px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-top" ></i></button>
+							<button id="h-E2" onclick="decreaseHour('hE2')" style="outline:none; position:absolute; margin-left:-220px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>
+							<button id="m-E2" onclick="decreaseMinutes('mE2')" style="outline:none; position:absolute; margin-left:-80px; margin-top:180px; height:10px;width:30px;background-color:#8ce196;border:#8ce196"><i  class="glyphicon glyphicon-triangle-bottom" ></i></button>						
+						</div>
 						</div>
 					</div>
 				</div>
  		<script>
-        	$("#h").on("keydown",function(e) {
+        	$("#h,#hE,#hE2").on("keydown",function(e) {
             	if(e.keyCode==8||e.keyCode==38||e.keyCode==40){
                 	return true;
                 }
     			if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) { //0-9 only {
         			
-                    var value=$("#h").val().toString();
+                    var value=$(this).val().toString();
                     if(value.length==2)
                     	return false;
                    	if(value==''&&((e.keyCode<58&&e.keyCode>50)||e.keyCode>98))
                     	return false;
                    	if(value[0]=='2'){
-                    	if((e.keyCode<58&&e.keyCode>52)||e.keyCode>100)
+                    	if((e.keyCode<58&&e.keyCode>51)||e.keyCode>99)
                         	return false;
                             }
   				  }
@@ -124,13 +195,13 @@ glyphicon glyphicon-calendar"></i></button>
                   	return false;
                   }
 				});
-                $("#m").on("keydown",function(e) {
+                $("#m,#mE,#mE2").on("keydown",function(e) {
             	if(e.keyCode==8||e.keyCode==38||e.keyCode==40){
                 	return true;
                 }
     			if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) { //0-9 only {
         			
-                    var value=$("#m").val().toString();
+                    var value=$(this).val().toString();
                     if(value.length==2)
                     	return false;
                    	if(value==''&&((e.keyCode<58&&e.keyCode>53)||e.keyCode>101))
@@ -140,7 +211,7 @@ glyphicon glyphicon-calendar"></i></button>
                   	return false;
                   }
 				});
-        </script>
+        </script>		
        <script>
         $("#btnClock").click(function () {
         $("#popupSveglie").show();
@@ -176,143 +247,75 @@ glyphicon glyphicon-calendar"></i></button>
 
 		</script>
 		<script>
-		function incrementHour()
+		function incrementHour(id)
 		{
-			var value = parseInt(document.getElementById('h').value, 10);
-			if(value<24)
+			var value = parseInt(document.getElementById(id).value, 10);
+			if(value<23)
 			{
 			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('h').value<9)
+			if(document.getElementById(id).value<9)
 			{
 			value++;
-			document.getElementById('h').value = '0'+value;
+			document.getElementById(id).value = '0'+value;
 			}
 			else{
 				value++;
-			document.getElementById('h').value = value;
+			document.getElementById(id).value = value;
 			}	
 			}
 		}
-		function incrementMinutes()
+		function incrementMinutes(id)
 		{
-			var value = parseInt(document.getElementById('m').value, 10);
+			var value = parseInt(document.getElementById(id).value, 10);
 			if(value<59)
 			{
 			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('m').value<9)
+			if(document.getElementById(id).value<9)
 			{
 			value++;
-			document.getElementById('m').value = '0'+value;
+			document.getElementById(id).value = '0'+value;
 			}
 			else{
 				value++;
-			document.getElementById('m').value = value;
+			document.getElementById(id).value = value;
 			}
 			}
 		}
-		function decreaseHour()
+		function decreaseHour(id)
 		{
-			var value = parseInt(document.getElementById('h').value, 10);
+			var value = parseInt(document.getElementById(id).value, 10);
 			if(value>0)
 			{
 			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('h').value<=10)
+			if(document.getElementById(id).value<=10)
 			{
 			value--;
-			document.getElementById('h').value = '0'+value;
+			document.getElementById(id).value = '0'+value;
 			}
 			else{
 				value--;
-			document.getElementById('h').value = value;
+			document.getElementById(id).value = value;
 			}
 			}
 		}
-		function decreaseMinutes()
+		function decreaseMinutes(id)
 		{
-			var value = parseInt(document.getElementById('m').value, 10);
+			var value = parseInt(document.getElementById(id).value, 10);
 			if(value>0)
 			{
 			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('m').value<=10)
+			if(document.getElementById(id).value<=10)
 			{
 			value--;
-			document.getElementById('m').value = '0'+value;
+			document.getElementById(id).value = '0'+value;
 			}
 			else{
 				value--;
-			document.getElementById('m').value = value;
+			document.getElementById(id).value = value;
 			}
 			}
 		}
-		/*FUNZIONI PER POPUP EVENTI
-		function incrementHourEvents()
-		{
-			var value = parseInt(document.getElementById('Eh').value, 10);
-			if(value<24)
-			{
-			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('Eh').value<9)
-			{
-			value++;
-			document.getElementById('Eh').value = '0'+value;
-			}
-			else{
-				value++;
-			document.getElementById('Eh').value = value;
-			}	
-			}
-		}
-		function incrementMinutesEvents()
-		{
-			var value = parseInt(document.getElementById('Em').value, 10);
-			if(value<59)
-			{
-			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('Em').value<9)
-			{
-			value++;
-			document.getElementById('Em').value = '0'+value;
-			}
-			else{
-				value++;
-			document.getElementById('Em').value = value;
-			}
-			}
-		}
-		function decreaseHourEvents()
-		{
-			var value = parseInt(document.getElementById('Eh').value, 10);
-			if(value>0)
-			{
-			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('Eh').value<=10)
-			{
-			value--;
-			document.getElementById('Eh').value = '0'+value;
-			}
-			else{
-				value--;
-			document.getElementById('Eh').value = value;
-			}
-			}
-		}
-		function decreaseMinutesEvents()
-		{
-			var value = parseInt(document.getElementById('Em').value, 10);
-			if(value>0)
-			{
-			value = isNaN(value) ? 0 : value;
-			if(document.getElementById('Em').value<=10)
-			{
-			value--;
-			document.getElementById('Em').value = '0'+value;
-			}
-			else{
-				value--;
-			document.getElementById('Em').value = value;
-			}
-			}
-		}*/		
+		
 		</script>
 		<script>
 			$("#ok").click(function(){
@@ -352,13 +355,44 @@ glyphicon glyphicon-calendar"></i></button>
 				  data: form,
 				   processData: false,  // tell jQuery not to process the data
 					contentType: false,  // tell jQuery not to set contentType
-				  success: function(data){
-					  
-					  
+				  success: function(data){	  
 				  }
 				});
-				
 			});
+				
+			$("#okE").click(function(){
+				
+				//alert($("#calendar").val());
+				var titolo=$("#nomeEvento").val();
+				var dataInizio=$("#calendar").val().split("/");
+				var dataSQLInizio=dataInizio[2]+'-'+dataInizio[0]+'-'+dataInizio[1];
+				var dataFine=$("#calendar2").val().split("/");
+				var dataSQLFine=dataFine[2]+'-'+dataFine[0]+'-'+dataFine[1];
+				var oraInizio=$("#hE").val();
+				var minutoInizio=$("#mE").val();
+				var oraFine=$("#hE2").val();
+				var minutoFine=$("#mE2").val();
+				var suoneria=$("[name=comboE]").val();
+				var form=new FormData();
+				form.append("nome",titolo);
+				form.append("dataInizio",dataSQLInizio);
+				form.append("dataFine",dataSQLFine);
+				form.append("oraInizio",oraInizio);
+				form.append("minutoInizio",minutoInizio);
+				form.append("oraFine",oraFine);
+				form.append("minutoFine",minutoFine);
+				form.append("suoneria",suoneria);
+				$.ajax({
+				  type: "post",
+				  url: "res/php/addEvento.php",
+				  data: form,
+				   processData: false,  // tell jQuery not to process the data
+					contentType: false,  // tell jQuery not to set contentType
+				  success: function(data){	  
+				  }
+				});
+			});
+
 		</script>
 	</body>
 </html>
