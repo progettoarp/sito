@@ -1,5 +1,5 @@
 <?php
-	$mysqli = new mysqli("localhost", "progettoleila", "delneri!", "my_progettoleila");
+	$mysqli = new mysqli("localhost", "root", "", "my_progettoleila");
     $delete=mysqli_query($mysqli,"truncate table db_notizie_aggiornate");
  	$result= mysqli_query($mysqli,"select * from db_notizie_source a, db_notizie_scelte b where a.id in (b.idNews)");
 	$i=0;
